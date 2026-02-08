@@ -1,45 +1,45 @@
-import { useEffect } from "react"
-import ExpenseInput from "./components/ExpenseInput"
-import Dashboard from "./components/Dashboard"
-import ExpenseList from "./components/ExpenseList"
-
+import { useState, useEffect } from "react";
+import Layout from "./components/Layout";
+import ExpenseInput from "./components/ExpenseInput";
+import Dashboard from "./components/Dashboard";
+import ExpenseList from "./components/ExpenseList";
 
 export default function App() {
-  const [expenses, setExpenses] = useState([])
-  const [darkMode, setDarkMode] = useState(false)
+  // Initialize state directly from localStorage
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+  const [expenses, setExpenses] = useState(() => {
+    const savedExpenses = localStorage.getItem("expenses");
+    return savedExpenses ? JSON.parse(savedExpenses) : [];
+  });
 
+  // Sync darkMode changes back to localStorage
   useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode")
-    if (savedMode === "true") setDarkMode(true)
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
-      const savedExpenses = localStorage.getItem("expenses")
-      if (savedExpenses) setExpenses(JSON.parse(savedExpenses))
-  }, [])
-
+  // Sync expenses changes back to localStorage
   useEffect(() => {
-    localStorage.setItem("darkMode", darkMode)
-  }, [darkMode])
-
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses))
-  },[expenses])
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
 
   const addExpense = (expense) => {
-    setExpenses([ ...expenses, { id: Date.now(), ...expense }])
-  }
+    setExpenses([...expenses, { id: Date.now(), ...expense }]);
+  };
 
   const deleteExpense = (id) => {
-    setExpenses(expenses.filter((exp) => exp.id !== id))
-  }
+    setExpenses(expenses.filter((exp) => exp.id !== id));
+  };
 
   const clearExpenses = () => {
-    if (window.confirm("Are you sure want to clear all expenses?")) {
-      setExpenses([])
-      localStorage.removeItem("expenses")
+    if (window.confirm("Are you sure you want to clear all expenses?")) {
+      setExpenses([]);
+      localStorage.removeItem("expenses");
     }
-  }
+  };
 
-  const loadDemoDate = () => {
+  const loadDemoData = () => {
     const demoExpenses = [
       { id: 1, description: "Groceries", amount: 50, category: "Food", date: "2026-02-01" },
       { id: 2, description: "Bus Ticket", amount: 10, category: "Transport", date: "2026-02-02" },
@@ -47,10 +47,10 @@ export default function App() {
       { id: 4, description: "Electricity Bill", amount: 70, category: "Utilities", date: "2026-01-25" },
       { id: 5, description: "Dinner Out", amount: 40, category: "Food", date: "2026-01-20" },
       { id: 6, description: "Movie Ticket", amount: 15, category: "Entertainment", date: "2026-01-18" },
-    ]
-    setExpenses(demoExpenses)
-    localStorage.setItem("expenses", JSON.stringify(demoExpenses))
-  }
+    ];
+    setExpenses(demoExpenses);
+    localStorage.setItem("expenses", JSON.stringify(demoExpenses));
+  };
 
   return (
     <div className={darkMode ? "dark" : ""}>
@@ -59,14 +59,20 @@ export default function App() {
           <h1 className="text-3xl font-bold">Expense Tracker</h1>
           <div className="flex gap-2">
             <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
+              onClick={() => setDarkMode(!darkMode)}
+              className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
             >
               {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
             <button
-            onClick={clearExpenses}
-            className="px-3 py-1 rounded bg-red-600 text-white hover:bg-blue-700"
+              onClick={clearExpenses}
+              className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700"
+            >
+              Clear All
+            </button>
+            <button
+              onClick={loadDemoData}
+              className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
             >
               Load Demo Data
             </button>
@@ -78,5 +84,5 @@ export default function App() {
         <ExpenseList expenses={expenses} onDelete={deleteExpense} />
       </Layout>
     </div>
-  )
+  );
 }
