@@ -40,7 +40,7 @@ It helps you log, visualize, and analyze your spending with dark mode, filters, 
 
 ### Default Mode
 
-![DefaultMode](public/DefaultMode.png)
+![DefaultMode](./public/DefaultMode.png)
 
 ### Dark Mode 
 ![DarkMode](public/DarkMode.png)
