@@ -38,6 +38,13 @@ It helps you log, visualize, and analyze your spending with dark mode, filters, 
 
 ## Screenshots
 
+### Default Mode
+
 ![DefaultMode](public/DefaultMode.png)
+
+### Dark Mode 
 ![DarkMode](public/DarkMode.png)
+
+### Charts
+
 ![Charts](public/Chart.png)
