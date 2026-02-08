@@ -35,9 +35,3 @@ It helps you log, visualize, and analyze your spending with dark mode, filters, 
 3. npm run dev
 
 4. npm run build
-
-## Screenshots
-
-![DefaultMode](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/DefaultMode.png)
-![DarkMode](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/DarkMode.png)
-![Charts](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/Chart.png)
