@@ -38,13 +38,6 @@ It helps you log, visualize, and analyze your spending with dark mode, filters, 
 
 ## Screenshots
 
-### Default Mode
-
-![DefaultMode](./public/DefaultMode.png)
-
-### Dark Mode 
-![DarkMode](public/DarkMode.png)
-
-### Charts
-
-![Charts](public/Chart.png)
+![DefaultMode](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/DefaultMode.png)
+![DarkMode](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/DarkMode.png)
+![Charts](https://raw.githubusercontent.com/your-username/expense-tracker-react/main/public/Chart.png)
