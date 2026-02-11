@@ -3,8 +3,12 @@ import Layout from "./components/Layout";
 import ExpenseInput from "./components/ExpenseInput";
 import Dashboard from "./components/Dashboard";
 import ExpenseList from "./components/ExpenseList";
+import Login from "./components/Login"; // <-- import login
 
 export default function App() {
+  // Track logged-in user
+  const [user, setUser] = useState(null);
+
   // Initialize state directly from localStorage
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
@@ -55,33 +59,39 @@ export default function App() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <Layout>
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Expense Tracker</h1>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
-            >
-              {darkMode ? "Light Mode" : "Dark Mode"}
-            </button>
-            <button
-              onClick={clearExpenses}
-              className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700"
-            >
-              Clear All
-            </button>
-            <button
-              onClick={loadDemoData}
-              className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
-            >
-              Load Demo Data
-            </button>
-          </div>
-        </div>
+        {!user ? (
+          <Login onLogin={setUser} /> 
+        ) : (
+          <>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-3xl font-bold">Expense Tracker</h1>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
+                >
+                  {darkMode ? "Light Mode" : "Dark Mode"}
+                </button>
+                <button
+                  onClick={clearExpenses}
+                  className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={loadDemoData}
+                  className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  Load Demo Data
+                </button>
+              </div>
+            </div>
 
-        <ExpenseInput onAdd={addExpense} />
-        <Dashboard expenses={expenses} />
-        <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+            <ExpenseInput onAdd={addExpense} />
+            <Dashboard expenses={expenses} />
+            <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+          </>
+        )}
       </Layout>
     </div>
   );
