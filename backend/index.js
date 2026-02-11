@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
+import expenseRoutes from './routes/expenses.js';
 
 const app = express();
 app.use(express.json());
@@ -18,5 +19,6 @@ mongoose
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 app.listen(5000, () => console.log('Server running on port 5000'));
