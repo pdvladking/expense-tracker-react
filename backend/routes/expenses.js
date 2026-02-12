@@ -1,6 +1,6 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
-import Expense from './models/Expense.js';
+import Expense from '../models/Expense.js'
 
 const router = express.Router();
 
@@ -32,4 +32,20 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
+// Delete expense by ID
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const expense = await Expense.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+    if (!expense) {
+      return res.status(404).json({ message: 'Expense not found' });
+    }
+    res.json({ message: 'Expense deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 export default router;
